@@ -6,32 +6,41 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import tn.iit.entity.Dossier;
 
 @Getter
 @Setter
 @Accessors(chain = true)
 @NoArgsConstructor
 public class DossierDetailsDTO {
-    private int articleId;
-    private String patient;
+    private int id_dossierdetails;
+    private String descriptionart;
+    private Integer articleId;
     private int qte;
     private float prix;
     private LocalDateTime date;
-    private Dossier dossier;
+    //private Dossier dossier;
     
-	public int getArticleId() {
+    
+	public int getId_dossierdetails() {
+		return id_dossierdetails;
+	}
+	public void setId_dossierdetails(int id_dossierdetails) {
+		this.id_dossierdetails = id_dossierdetails;
+	}
+	
+	public String getDescriptionart() {
+		return descriptionart;
+	}
+	public void setDescriptionart(String descriptionart) {
+		this.descriptionart = descriptionart;
+	}
+	public Integer getArticleId() {
 		return articleId;
 	}
 	public void setArticleId(int articleId) {
 		this.articleId = articleId;
 	}
-	public String getPatient() {
-		return patient;
-	}
-	public void setPatient(String patient) {
-		this.patient = patient;
-	}
+
 	public int getQte() {
 		return qte;
 	}
@@ -50,11 +59,11 @@ public class DossierDetailsDTO {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
-	public Dossier getDossier() {
+	/*public Dossier getDossier() {
 		return dossier;
 	}
 	public void setDossier(Dossier dossier) {
 		this.dossier = dossier;
-	}
+	}*/
     
 }

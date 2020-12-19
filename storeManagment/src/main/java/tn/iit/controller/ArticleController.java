@@ -1,7 +1,7 @@
 package tn.iit.controller;
 
 import java.net.URI;
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-
 import tn.iit.dto.ArticleDTO;
-import tn.iit.entity.Article;
-import tn.iit.exception.ArticleNotFoundException;
-import tn.iit.mapper.ArticleMapper;
 import tn.iit.service.ArticleService;
 
 @RestController
@@ -29,25 +24,23 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
     
-    // Get all articles GET /api/articles
+
     @GetMapping(value="/articles")
-    List<Article> getAll(){
+    Collection<ArticleDTO> getAll(){
         return articleService.getAllArticles();
     }
     
-    // Get single article by ID  GET /api/articles/{id}
+
     @GetMapping(value="/articles/{id}")
-    ResponseEntity<Article> getById(@PathVariable("id") int id) {
-        Article art = articleService.findById(id)
-                                    .orElseThrow(()->new ArticleNotFoundException("No Article with ID : "+id));
+    ResponseEntity<ArticleDTO> getById(@PathVariable("id") int id) {
+        ArticleDTO art = articleService.findById(id);                                 
         return ResponseEntity.ok().body(art);
     }
     
-    // Create new article POST /api/articles
+
     @PostMapping(value="/articles")
     ResponseEntity<?> createArticle(@RequestBody ArticleDTO inart) {
-        Article art      = ArticleMapper.DtoToEntity(inart);
-        Article addedart = articleService.save(art);
+        ArticleDTO addedart = articleService.save(inart);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                                         .path("/{id}")
                                         .buildAndExpand(addedart.getId())
@@ -56,25 +49,17 @@ public class ArticleController {
     }
     
     
-    // Update article details PUT /api/article/{id}
     @PutMapping(value="/articles/{id}")
-    ResponseEntity<Article> updateArticle(@PathVariable("id") int id,  @RequestBody ArticleDTO inart) {
-        Article art = articleService.findById(id)
-                                    .orElseThrow(()->new ArticleNotFoundException("No Article with ID : "+id));
-        
-        Article newart = ArticleMapper.DtoToEntity(inart);
-        newart.setId(art.getId());
-        articleService.save(newart);
-        return ResponseEntity.ok().body(newart);    
+    ResponseEntity<ArticleDTO> updateArticle(@PathVariable("id") int id,  @RequestBody ArticleDTO inart) {
+    	inart.setId(id);
+    	ArticleDTO resultdos = articleService.update(inart);
+        return ResponseEntity.ok().body(resultdos);    
     }
     
     
-    // Delete article by ID DELETE /api/articles/{id}
     @DeleteMapping(value="/articles/{id}")
     ResponseEntity deleteArticle( @PathVariable("id") int id) {
-        Article art = articleService.findById(id)
-                                    .orElseThrow(()->new ArticleNotFoundException("No Article with ID : "+id));
-        articleService.delete(art.getId());
+        articleService.delete(id);
         return ResponseEntity.ok().body("Article with ID : "+id+" deleted with success!");  
     }
 }

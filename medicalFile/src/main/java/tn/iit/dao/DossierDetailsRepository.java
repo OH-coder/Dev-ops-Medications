@@ -6,5 +6,5 @@ import tn.iit.entity.DossierDetails;
 
 
 public interface DossierDetailsRepository  extends JpaRepository<DossierDetails, Integer> {
-
+	 DossierDetails findById(int id);
 }

@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 public class ArticleDTO {
-	private int id;
+	private Integer id;
     private String description;
 
 	public String getDescription() {
@@ -21,7 +21,7 @@ public class ArticleDTO {
 		this.description = description;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

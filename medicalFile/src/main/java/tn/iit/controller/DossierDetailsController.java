@@ -1,7 +1,7 @@
 package tn.iit.controller;
 
 import java.net.URI;
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import tn.iit.dto.DossierDetailsDTO;
-import tn.iit.entity.DossierDetails;
-import tn.iit.exception.DossierDetailsNotFoundException;
-import tn.iit.mapper.DossierDetailsMapper;
 import tn.iit.service.DossierDetailsService;
 
 @RestController
@@ -28,25 +25,22 @@ public class DossierDetailsController {
     @Autowired
     private DossierDetailsService dossierDetailsService;
     
-    // Get all dossierdetails GET /api/dossierdetails
     @GetMapping(value="/dossierdetails")
-    List<DossierDetails> getAll(){
+    Collection<DossierDetailsDTO> getAll(){
         return dossierDetailsService.getAllDossierDetails();
     }
     
-    // Get single dossierdetails by ID  GET /api/dossierdetails/{id}
+
     @GetMapping(value="/dossierdetails/{id}")
-    ResponseEntity<DossierDetails> getById(@PathVariable("id") int id) {
-        DossierDetails dos = dossierDetailsService.findById(id)
-                                    .orElseThrow(()->new DossierDetailsNotFoundException("No Dossier Details with ID : "+id));
+    ResponseEntity<DossierDetailsDTO> getById(@PathVariable("id") int id) {
+        DossierDetailsDTO dos = dossierDetailsService.findById(id);
         return ResponseEntity.ok().body(dos);
     }
     
-    // Create new dossierdetails POST /api/dossierdetails
+
     @PostMapping(value="/dossierdetails")
     ResponseEntity<?> createDossierDetails(@RequestBody DossierDetailsDTO indos) {
-        DossierDetails dos      = DossierDetailsMapper.DtoToEntity(indos);
-        DossierDetails addeddos = dossierDetailsService.save(dos);
+        DossierDetailsDTO addeddos = dossierDetailsService.save(indos);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                                         .path("/{id}")
                                         .buildAndExpand(addeddos.getId_dossierdetails())
@@ -55,25 +49,18 @@ public class DossierDetailsController {
     }
     
     
-    // Update dossierdetails PUT /api/dossierdetails/{id}
     @PutMapping(value="/dossierdetails/{id}")
-    ResponseEntity<DossierDetails> updateDossierDetails(@PathVariable("id") int id,  @RequestBody DossierDetailsDTO indos) {
-        DossierDetails dos = dossierDetailsService.findById(id)
-                                    .orElseThrow(()->new DossierDetailsNotFoundException("No Dossier Details with ID : "+id));
-        
-        DossierDetails newdos = DossierDetailsMapper.DtoToEntity(indos);
-        newdos.setId_dossierdetails(dos.getId_dossierdetails());
-        dossierDetailsService.save(newdos);
-        return ResponseEntity.ok().body(newdos);    
+    ResponseEntity<DossierDetailsDTO> updateDossierDetails(@PathVariable("id") int id,  @RequestBody DossierDetailsDTO indos) {
+    	indos.setId_dossierdetails(id);
+    	DossierDetailsDTO resultdos = dossierDetailsService.update(indos);
+        return ResponseEntity.ok().body(resultdos);    
     }
     
     
     // Delete dossier by ID DELETE /api/dossierdetails/{id}
     @DeleteMapping(value="/dossierdetails/{id}")
     ResponseEntity deleteDossierDetails( @PathVariable("id") int id) {
-        DossierDetails dos = dossierDetailsService.findById(id)
-                                    .orElseThrow(()->new DossierDetailsNotFoundException("No Dossier Details with ID : "+id));
-        dossierDetailsService.delete(dos.getId_dossierdetails());
+        dossierDetailsService.delete(id);
         return ResponseEntity.ok().body("Dossier Details with ID : "+id+" deleted with success!");  
     }
 }

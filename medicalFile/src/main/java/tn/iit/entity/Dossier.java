@@ -1,6 +1,7 @@
 package tn.iit.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -54,6 +55,13 @@ public class Dossier implements Serializable {
 		this.patient = patient;
 	}
 	
+	
+	public List<DossierDetails> getDossierdetails() {
+		return dossierdetails;
+	}
+	public void setDossierdetails(List<DossierDetails> dossierdetails) {
+		this.dossierdetails = dossierdetails;
+	}
 	public Dossier() {
 		super();
 	}

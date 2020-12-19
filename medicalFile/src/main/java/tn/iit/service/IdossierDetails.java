@@ -1,13 +1,14 @@
 package tn.iit.service;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
-import tn.iit.entity.Dossier;
-import tn.iit.entity.DossierDetails;
+
+import tn.iit.dto.DossierDetailsDTO;
 
 public interface IdossierDetails {
-	List<DossierDetails> getAllDossierDetails();
-    Optional<DossierDetails> findById(int id);
-    DossierDetails save(DossierDetails dos);
+	Collection<DossierDetailsDTO> getAllDossierDetails();
+    DossierDetailsDTO findById(int id);
+    DossierDetailsDTO save(DossierDetailsDTO dos);
+    DossierDetailsDTO update(DossierDetailsDTO dos);
     void delete(int id);
 }

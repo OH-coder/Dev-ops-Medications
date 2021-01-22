@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Getter;
@@ -23,9 +24,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "article")
+@Table(name = "medication")
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Article implements Serializable {
+public class Medication implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -47,11 +49,6 @@ public class Article implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-
-	public Article() {
-		super();
 	}
 
 }

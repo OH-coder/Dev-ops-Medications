@@ -9,16 +9,16 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @NoArgsConstructor
-public class ArticleDTO {
+public class PatientDTO {
 	private int id;
-    private String description;
+	private String name;
 
-	public String getDescription() {
-		return description;
+	public String getName() {
+		return name;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getId() {
@@ -29,5 +29,4 @@ public class ArticleDTO {
 		this.id = id;
 	}
 
-    
 }

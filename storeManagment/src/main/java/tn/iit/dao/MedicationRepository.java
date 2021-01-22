@@ -2,9 +2,9 @@ package tn.iit.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import tn.iit.entity.Article;
+import tn.iit.entity.Medication;
 
 @Repository
-public interface ArticleRepository extends JpaRepository<Article, Integer>{
-	Article findById(int id);
+public interface MedicationRepository extends JpaRepository<Medication, Integer>{
+	Medication findById(int id);
 }

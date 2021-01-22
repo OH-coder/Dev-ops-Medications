@@ -1,39 +1,44 @@
 package tn.iit.dto;
 
-import java.time.LocalDateTime;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Transient;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Accessors(chain = true)
 @NoArgsConstructor
-public class DossierDetailsDTO {
-    private int id_dossierdetails;
-    private String descriptionart;
-    private Integer articleId;
-    private int qte;
-    private float prix;
-    private LocalDateTime date;
-    //private Dossier dossier;
-    
-    
-	public int getId_dossierdetails() {
-		return id_dossierdetails;
+public class PrescriptionDTO {
+	private int id_prescription;
+	private String descriptionart;
+	private Integer articleId;
+	private int qte;
+	private float prix;
+	private LocalDateTime date;
+	@Transient
+	private PatientDTO patientDTO;
+
+
+	public int getId_prescriptions() {
+		return id_prescription;
 	}
-	public void setId_dossierdetails(int id_dossierdetails) {
-		this.id_dossierdetails = id_dossierdetails;
+
+	public void setId_prescriptions(int id_prescriptions) {
+		this.id_prescription = id_prescriptions;
 	}
-	
+
 	public String getDescriptionart() {
 		return descriptionart;
 	}
+
 	public void setDescriptionart(String descriptionart) {
 		this.descriptionart = descriptionart;
 	}
+
 	public Integer getArticleId() {
 		return articleId;
 	}
@@ -59,11 +64,4 @@ public class DossierDetailsDTO {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
-	/*public Dossier getDossier() {
-		return dossier;
-	}
-	public void setDossier(Dossier dossier) {
-		this.dossier = dossier;
-	}*/
-    
 }

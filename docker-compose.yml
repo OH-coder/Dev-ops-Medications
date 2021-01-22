@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  store-managment :
+    image: ohcoder93/storemanagement
+    ports:
+      - 8585:8585
+    depends_on:
+        - mysqlconnection
+
+  medical-file:
+    image: ohcoder93/medicalfile
+    ports:
+      - 8686:8686
+    depends_on:
+      - mysqlconnection
+      - store-managment
+
+  mysqlconnection:
+    image: mysql
+    volumes:
+      - my-data:/var/lib/mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cliniquedb
+
+volumes:
+  my-data:
